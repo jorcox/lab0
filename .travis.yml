@@ -3,4 +3,12 @@ jdk:
 - oraclejdk8
 before_install:
 - openssl aes-256-cbc -K $encrypted_c1aecfa64746_key -iv $encrypted_c1aecfa64746_iv
-  -in src/main/resources/application.properties.enc -out src/main/resources/application.properties -d
+  -in src/main/resources/application.properties.enc -out src/main/resources/application.properties
+  -d
+deploy:
+  provider: heroku
+  api_key:
+    secure: moozerA7AcErHtGTbdb9UdlBk2Y5yB0OxTs4cKhrce4vj9WUKEoCdXKlA8aHP22vNHGd2P2pItnRoTwp4y5w7nfnReW8DSmz5smgps51UJd/pPc1F4dpzcHqTzUDFeALCsIXFH7RKSUIbQfObmTrQesnX1qhi/2lGWbjGt/69Mezlc+4S8khUUur2E4TkAqur2l3RhgRhl7hmyGc8sqpIkcgnuZaFlTveq8zFSBrdRREEAjjB7HpanY3I6bLW6gD4On8xnUlJw01hMmSIWqkmCW2cKvLVXrC79oGK+TXa445nCMY6pjseJxTPi6rT3F2rql3fEAPYzxhkoYDhagae513Uihns6h4/vjBoM4se7/8/xrxXoVNDthIyqkFKhZIz5bdt1S2CV4f7WcEgmA5GhDVR5NAfWuf/ctUTHM7aBcSrF6x6c7zm2ANJcjujZBNi8aMzrGKB6H6LQt4USUcst7SKGb93KMJkgmHa+1CAnwDkBiPPhdGfeWSNGgpKmAVv9mCmtLGtQ9fdsPHiLbXJnKQ2VMwxdp8kBG3CapENUEzPWD0xjq3qiR0I0dfsAS4wMqEN03d2xAaYzfGcdRKeIwG1KME+9jbjA3OmY8gTafgw4qCYUPMLs3LsOLylWedEuFzIdAVq2kar+dsizMsaN06irdA5qS/pppGx7k7TFM=
+  app: lab0
+  on:
+    repo: jorcox/lab0
