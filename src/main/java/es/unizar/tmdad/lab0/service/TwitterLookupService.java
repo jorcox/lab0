@@ -20,12 +20,16 @@ public class TwitterLookupService {
 	@Autowired
 	@Value("${twitter.accessToken}")
 	private String accessToken;
-	
+
 	@Autowired
 	@Value("${twitter.accessTokenSecret}")
 	private String accessTokenSecret;
 	
 	public SearchResults search(String query) {
+		System.out.println(consumerKey);
+		System.out.println(consumerSecret);
+		System.out.println(accessToken);
+		System.out.println(accessTokenSecret);
         Twitter twitter = new TwitterTemplate(consumerKey, consumerSecret, accessToken, accessTokenSecret);
         return twitter.searchOperations().search(query);
     }
