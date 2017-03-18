@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import es.unizar.tmdad.lab0.service.TwitterLookupService;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 
+import es.unizar.tmdad.lab0.service.TwitterLookupService;
+import es.unizar.tmdad.lab0.Query;
 
 @Controller
 public class SearchController {
@@ -24,9 +26,10 @@ public class SearchController {
     }
 
     @ResponseBody
-    @RequestMapping("/search")
-    public SearchResults search(@RequestParam("q") String q, Model m) {
-    	m.addAttribute("res", twitter.search(q));
-        return twitter.search(q);
+    @MessageMapping("/search")
+    public void search(Query q) {
+    	//m.addAttribute("res", twitter.search(q));
+        //return twitter.search(q);
+        twitter.search(q.getQuery());
     }
 }

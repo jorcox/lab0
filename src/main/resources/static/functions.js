@@ -1,31 +1,65 @@
+var client;
+var subscription = null;
+
+var subscriptionEndpoint = '/queue/search/'
+
+
+
 $(document).ready(function() {
+	stompConnection();
 	registerSearch();
 });
 
-function registerSearch() {
-	$("#search").submit(function(ev){
-		event.preventDefault();
-		$.getJSON($(this).attr("action"), {q: $("#q").val()}, function(data) {
+function stompConnection() {
+	client = Stomp.over(new SockJS("/twitter"));
+	
+	var headers = {};
+	var connectCallback = {};
+	client.connect(headers, connectCallback);
+}
 
-			var template = '{{#tweets}}'
-			+'<div class="row panel panel-default">'
+function subscribeTwitter(query) {
+
+	if (subscription != null) subscription.unsubscribe();
+
+	subscription = client.subscribe(subscriptionEndpoint + query, function(tweet){
+
+		var template = //'{{#tweets}}'
+			'<div class="row panel panel-default">'
 			+	    '<div class="panel-heading">'
 			+	        '<a href="https://twitter.com/{{fromUser}}"'
 			+	           'target="_blank"><b>@{{fromUser}}</b></a>'
 			+	        '<div class="pull-right">'
-			+	            '<a href="https://twitter.com/{{fromUser}}/status/{{idStr}}'
-			+	               'target="_blank"><span class="glyphicon glyphicon-link"></span></a>'
+			+	            '<a href="https://twitter.com/{{fromUser}}/status/{{idStr}}"'
+			+ 				'target="_blank"><span class="glyphicon glyphicon-link"></span></a>'
 			+	        '</div>'
 			+	    '</div>'
 			+	    '<div class="panel-body">{{unmodifiedText}}</div>'
-			+'</div>'
-			+'{{/tweets}}'
+			+'</div>';
+			//+'{{/tweets}}';
 
-			var html = Mustache.to_html(template, data);
+		var data = JSON.parse(tweet.body);
 
-			$("#resultsBlock").empty().append(html);
-			
-		});	
+		var html = Mustache.to_html(template, data);
+
+		$("#resultsBlock").append(html);
+	}, function(error){
+		// Error connecting to the endpoint
+		console.log('Error: ' + error);
 	});
+
+	client.send('/app/search', {}, JSON.stringify({'query' : query}));
+}
+
+function registerSearch() {
+	$("#search").submit(function(ev){
+		event.preventDefault();
+		$("#resultsBlock").empty();	
+		// Creating WebSocket
+		if (client == null) stompConnection();
+		else subscribeTwitter($('input#q').val());
+	});
+
+
 }
 

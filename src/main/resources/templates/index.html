@@ -21,7 +21,14 @@
     <script
             src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"
             th:src="@{/webjars/bootstrap/3.3.1/js/bootstrap.min.js}"></script>
+
+    <!-- STOMP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.2/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <!-- Mustache -->
     <script th:src="@{/mustache.js}" src="../static/mustache.js" type="text/javascript"></script>
+
     <script th:src="@{/functions.js}" src="../static/functions.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
@@ -35,9 +42,7 @@
             2015-2016</p>
     </div>
     <div class="nav navbar-right">
-        <a title="UNIZAR" href="http://www.unizar.es"><img height="50"
-                                                           th:src="@{/logoUZ.png}" src="../static/logoUZ.png"
-                                                           alt=""/></a>
+        <a title="UNIZAR" href="http://www.unizar.es"><img height="50" th:src="@{/logoUZ.png}" src="../static/logoUZ.png" alt=""/></a>
     </div>
 </nav>
 <div class="container">
